@@ -71,9 +71,9 @@ body[type*=server] #body_home {
 
 .message,
 .time {
-    padding: 4px 8px 4px;
+    padding: 5px 8px 4px;
     /* Eureka! This adds a subtle line between all chat messages! */
-    border-top: 1px solid #073642;
+    border-bottom: 1px solid #073642;
 }
 
 .sender {
@@ -88,7 +88,7 @@ body[type*=server] #body_home {
 }
 
 body[type*=server] .message {
-    max-width: 90%;
+    max-width: 100%; /* BADBADNOTGOOD YA CHANGED THIS B (90%) */
 }
 
 .time {
@@ -96,7 +96,7 @@ body[type*=server] .message {
     padding: 4px 8px 4px;
 }
 
-/* Background of  */
+/* Background of ??? */
 .sender,
 .time {
     background: #002b36;
@@ -174,30 +174,32 @@ body[type*=server] .sender { display: none; }
     color: #444444 !important;
     background: #000000;
     font-size: 0.8em !important;
-    padding: 2 8px;
+    padding: 3px 8px 1px;
     line-height: 1.0rem;
+
+    border-bottom: 1px solid transparent;
+    /*border-bottom: #ff0000;*/
 }
 
 /*body[type*=channel]*/ .event .time {
     color: #444444 !important;
     background: #000000;
     font-size: 0.8em !important;
-    padding: 2 8px;
+    padding: 3px 8px 1px;
+    /*padding: 2 8px;*/
     line-height: 1.0rem;
+
+    border-bottom: 1px solid transparent;
 }
 
 .event:hover .message, .event:hover .time{
     color: #839496 !important;
 }
 
-/* THESE WORK!!! BUT THEY NEED TO WORK AT THE SAME TIME */
-/*.event:hover .message {
-    color: #ff0000 !important;
+.event + :not(.event) .message, 
+.event + :not(.event) .time {
+    border-top: 1px solid #073642;
 }
-
-.event:hover .time:hover {
-    color: #ff0000 !important;
-}*/
 
 /* Affects only the before message, in this */
 /* case just the arrows before the event message */
@@ -221,7 +223,7 @@ body[type*=server] .sender { display: none; }
 .line[ltype*=part] .message:before,
 .line[ltype*=quit] .message:before {
     content: '← ';
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 /* Red for leaving */
@@ -285,68 +287,6 @@ body div.line[ltype*=off-the-record-encryption-status] p {
     color: #93a1a1 !important;
 }
 
-/* Changes disconnect messages */
-/*.notice {
-    background-color: #ff0000;
-}*/
-
-/* Changes disconnect messages? */
-/*.message[type*=debug] {
-    background-color: #ff0000 !important;
-}*/
-
-/* Working on Events */
-/*.line .event {
-    font-style: italic;
-    color: #444444 !important;
-    background: #000000;
-    font-size: 0.8em !important;
-    line-height: 1.2rem;
-}
-
-.line:hover .event {
-    color: #839496 !important;
-}*/
-
-/* Shifts the event messages slightly to the right */
-.event > * {
-    padding: 2 8px;
-    background-color: #ff0000;
-}
-
-/* These are lifted from the Colloquy original */
-/* in order to compress channel events. */
-
-/* This block controls subsequent events */
-.event + .event > * {
-    padding: 2 8px;
-    /*position: relative;*/
-    /* Un-do first event's bottom padding. */
-    /*top: -4px;*/
-    border-top: 1px solid transparent;
-}
-
-.message + .event > * {
-    border-top: 1px solid transparent;
-}
-
-.event + .message > * {
-    padding: 0 8px;
-    position: relative;
-    /* Un-do first event's bottom padding. */
-    top: -4px;
-    border-top: 1px solid transparent;
-    background-color: #ff0000;
-}
-
-/*.event + .message {
-    padding: 0 8px;
-    position: relative;*/
-    /* Un-do first event's bottom padding. */
-    top: -4px;
-    /*border-top: 1px solid #073642; */
-/*}*/
-
 body[type*=server] .event .message {
     color: #999;
     background-color: #073642;
@@ -385,6 +325,7 @@ body[type*=server] .event .message:before {
 .text[highlight*=true] .time {
     font-weight: bold;
     color: #2aa198 !important;
+    border:none; /* BADBADNOTGOOD */
     /*color: #ff0000;*/
 }
 
@@ -433,6 +374,7 @@ body[type*=server] .event .message:before {
     display: flex;
     display: -webkit-flex;
     padding: 0.5em 0;
+    /*padding: 0.2em 0;*/
 }
 
 .message_buffer_session_indicator > hr {
@@ -455,6 +397,66 @@ body[type*=server] .event .message:before {
 }
 
 /* ************************************************* */
+
+/* Selected User */
+.sender {
+    cursor: pointer;
+}
+
+div.line[ltype="privmsg"]:not(.selectedUser),
+div.line[ltype="action"]:not(.selectedUser) {
+    transition-property: border-top, border-bottom, background-color;
+    transition-duration: 0.25s, 0.25s, 0.25s;
+}
+
+div.line[ltype="privmsg"] .time:not(.selectedUser),
+div.line[ltype="action"] .time:not(.selectedUser) {
+    transition: color 0.25s;
+}
+
+div.line.selectedUser[highlight="false"] .time {
+    transition: color 0.25s ease-in;
+    color: #93a1a1; /* Emphasized content */
+}
+
+/* Remove existing borders when selected */
+div.line.selectedUser[highlight="false"] .message,
+div.line.selectedUser[highlight="false"] .time {
+    border: none;
+}
+
+div.line.selectedUser[highlight="false"] {
+    transition-property: color, border-top, border-bottom, background-color;
+    transition-duration: 0.25s, 0.25s, 0.25s, 0.25s;
+
+    color: #93a1a1; /* Emphasized content */
+    border: 1px solid #0f728a; /* dark red top/bottom border */
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+
+div.line.selectedUser[highlight="false"]:hover {
+    border-color: #aa362b;
+}
+
+div.line.selectedUser[highlight="false"] + div.line.selectedUser[highlight="false"] {
+    border-top: none;
+}
+
+/* Color of selected messages */
+div.line.selectedUser[highlight="false"] .message,
+div.line.selectedUser[highlight="false"] .sender,
+div.line.selectedUser[highlight="false"] .time {
+    background-color: #073642;
+}
+
+div.line.selectedUser[highlight="false"]:hover .message,
+div.line.selectedUser[highlight="false"]:hover .sender,
+div.line.selectedUser[highlight="false"]:hover .time {
+    background-color: #68271d;
+}
+
 
 /* Mark made with Command-L. */
 #mark {
@@ -553,8 +555,8 @@ img {
 
 /* Nickname Colors */
 
-/* Creates an identifying box around nicknames referred */
-/* to in messages. */
+/* Creates an identifying box around nicknames */
+/* referred to in messages. */
 body .inline_nickname {
     color: #fff;
     display: inline-block;
