@@ -88,7 +88,7 @@ body[type*=server] #body_home {
 }
 
 body[type*=server] .message {
-    max-width: 100%; /* BADBADNOTGOOD YA CHANGED THIS B (90%) */
+    max-width: 100%;
 }
 
 .time {
