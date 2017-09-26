@@ -83,7 +83,7 @@ body[type*=server] #body_home {
 
 .message {
     /*max-width: 90%;*/
-    max-width: 75%;
+    max-width: 100%;
     width: 100%;
 }
 
