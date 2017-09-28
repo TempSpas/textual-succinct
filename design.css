@@ -82,9 +82,10 @@ body[type*=server] #body_home {
 }
 
 .message {
-    /*max-width: 90%;*/
     max-width: 100%;
     width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 body[type*=server] .message {
