@@ -571,7 +571,7 @@ body .inline_nickname {
     display: inline-block;
     line-height: 1;
     padding: 3px 2px;
-    background: #2C3E50;
+    background: #073642; /*#2C3E50;*/
     border: 1px solid #34495E;
     border-radius: 3px;
     /*margin: 2px 0;*/
