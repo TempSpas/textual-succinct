@@ -67,7 +67,9 @@ Succinct = {
             line.getAttribute('data-command') === '319' ||
             line.getAttribute('data-command') === '312' ||
             line.getAttribute('data-command') === '671' ||
-            line.getAttribute('data-command') === '317')
+            line.getAttribute('data-command') === '317' ||
+            line.getAttribute('data-command') === '301' ||
+            line.getAttribute('data-command') === '330')
         {
             line.classList.add('whois');
         }
