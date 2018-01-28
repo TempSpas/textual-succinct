@@ -330,42 +330,42 @@ body[type*=server] .event .message:before {
 
 /* This controls the text color of the entire highlighted */
 /* message, as well as the timestamp text color. */
-.text[highlight*=true],
-.text[highlight*=true] .time {
+.text[data-highlight*=true],
+.text[data-highlight*=true] .time {
     font-weight: bold;
     color: #2aa198 !important;
     border:none; /* BADBADNOTGOOD */
     /*color: #ff0000;*/
 }
 
-/*.text[highlight*=true][type*=privmsg] .sender {
+/*.text[data-highlight*=true][type*=privmsg] .sender {
     padding: 5px 8px 3px !important;
 }*/
 
-.text[highlight*=true] {
+.text[data-highlight*=true] {
     border: 1px solid #284e84;
     border-left: none;
     border-right: none;
     outline: none;
 }
 
-.text[highlight*=true]:hover {
+.text[data-highlight*=true]:hover {
     border-color: #3069ab;
 }
 
-.text[highlight*=true] + .text[highlight*=true] {
+.text[data-highlight*=true] + .text[data-highlight*=true] {
     border-top: none;
 }
 
-.text[highlight*=true] .message,
-.text[highlight*=true] .sender,
-.text[highlight*=true] .time {
+.text[data-highlight*=true] .message,
+.text[data-highlight*=true] .sender,
+.text[data-highlight*=true] .time {
     background-color: #1b3458;
 }
 
-.text[highlight*=true]:hover .message,
-.text[highlight*=true]:hover .sender,
-.text[highlight*=true]:hover .time {
+.text[data-highlight*=true]:hover .message,
+.text[data-highlight*=true]:hover .sender,
+.text[data-highlight*=true]:hover .time {
     background-color: #204571;
 }
 
