@@ -412,29 +412,29 @@ body[type*=server] .event .message:before {
     cursor: pointer;
 }
 
-div.line[ltype="privmsg"]:not(.selectedUser),
-div.line[ltype="action"]:not(.selectedUser) {
+div.line[data-line-type="privmsg"]:not(.selectedUser),
+div.line[data-line-type="action"]:not(.selectedUser) {
     transition-property: border-top, border-bottom, background-color;
     transition-duration: 0.25s, 0.25s, 0.25s;
 }
 
-div.line[ltype="privmsg"] .time:not(.selectedUser),
-div.line[ltype="action"] .time:not(.selectedUser) {
+div.line[data-line-type="privmsg"] .time:not(.selectedUser),
+div.line[data-line-type="action"] .time:not(.selectedUser) {
     transition: color 0.25s;
 }
 
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .time {
     transition: color 0.25s ease-in;
     color: #93a1a1; /* Emphasized content */
 }
 
 /* Remove existing borders when selected */
-div.line.selectedUser[highlight="false"] .message,
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .message,
+div.line.selectedUser[data-highlight="false"] .time {
     border: none;
 }
 
-div.line.selectedUser[highlight="false"] {
+div.line.selectedUser[data-highlight="false"] {
     transition-property: color, border-top, border-bottom, background-color;
     transition-duration: 0.25s, 0.25s, 0.25s, 0.25s;
 
@@ -445,24 +445,24 @@ div.line.selectedUser[highlight="false"] {
     outline: none;
 }
 
-div.line.selectedUser[highlight="false"]:hover {
+div.line.selectedUser[data-highlight="false"]:hover {
     border-color: #aa362b;
 }
 
-div.line.selectedUser[highlight="false"] + div.line.selectedUser[highlight="false"] {
+div.line.selectedUser[data-highlight="false"] + div.line.selectedUser[data-highlight="false"] {
     border-top: none;
 }
 
 /* Color of selected messages */
-div.line.selectedUser[highlight="false"] .message,
-div.line.selectedUser[highlight="false"] .sender,
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .message,
+div.line.selectedUser[data-highlight="false"] .sender,
+div.line.selectedUser[data-highlight="false"] .time {
     background-color: #073642;
 }
 
-div.line.selectedUser[highlight="false"]:hover .message,
-div.line.selectedUser[highlight="false"]:hover .sender,
-div.line.selectedUser[highlight="false"]:hover .time {
+div.line.selectedUser[data-highlight="false"]:hover .message,
+div.line.selectedUser[data-highlight="false"]:hover .sender,
+div.line.selectedUser[data-highlight="false"]:hover .time {
     background-color: #68271d;
 }
 
