@@ -172,19 +172,17 @@ div.line[data-line-type="action"] .sender:before {
 
 /* Any and all channel events */
 /*body[type*=channel]*/ .event .message {
-    font-style: italic;
-    color: #444444 !important;
+    color: #586e75 !important;
     background: #000000;
     font-size: 0.8em !important;
     padding: 3px 8px 1px;
     line-height: 1.0rem;
 
     border-bottom: 1px solid transparent;
-    /*border-bottom: #ff0000;*/
 }
 
 /*body[type*=channel]*/ .event .time {
-    color: #444444 !important;
+    color: #586e75 !important;
     background: #000000;
     font-size: 0.8em !important;
     padding: 3px 8px 1px;
@@ -212,13 +210,10 @@ div.line[data-line-type="action"] .sender:before {
 }
 
 /* Different symbols for join/leave messages */
-/* for easier visual reference. */
+/* for easier visual reference. Green arrow */
+/* for joins, red for parts. */
 .line[data-line-type="join"] .message:before {
     content: '→ ';
-}
-
-/* Green for joins */
-.line[data-line-type="join"] .message:hover:before {
     color: #339933 !important;
 }
 
@@ -226,13 +221,6 @@ div.line[data-line-type="action"] .sender:before {
 .line[data-line-type="part"] .message:before,
 .line[data-line-type="quit"] .message:before {
     content: '← ';
-    /*font-weight: bold;*/
-}
-
-/* Red for leaving */
-.line[data-line-type="kick"] .message:before,
-.line[data-line-type="part"] .message:before,
-.line[data-line-type="quit"] .message:hover:before {
     color: #dc322f !important;
 }
 
@@ -388,7 +376,7 @@ body[type*=server] .event .message:before {
 }
 
 .message_buffer_session_indicator > hr {
-    background: #93a1a1; /* Lines on either side */
+    background: #b58900; /* Lines on either side */
     border: 0;
     height: 1px;
     margin-top: 0.6em;
@@ -399,7 +387,7 @@ body[type*=server] .event .message:before {
 .message_buffer_session_indicator > span {
     font-style: oblique;
     margin: 0 1em;
-    color: #93a1a1;
+    color: #b58900;
 }
 
 .message_buffer_session_indicator + #mark {
@@ -435,6 +423,10 @@ div.line.selectedUser[data-highlight="false"] .time {
     border: none;
 }
 
+div.line.selectedUser[data-highlight="false"] .sender:before {
+    content: '> ';
+}
+
 div.line.selectedUser[data-highlight="false"] {
     transition-property: color, border-top, border-bottom, background-color;
     transition-duration: 0.25s, 0.25s, 0.25s, 0.25s;
@@ -446,11 +438,25 @@ div.line.selectedUser[data-highlight="false"] {
     outline: none;
 }
 
+/* Special rules for borders so they aren't placed */
+/* after consecutive messages. */
+div.line.selectedUser[data-highlight="false"] + 
+div.line[data-line-type="privmsg"]:not(.selectedUser) {
+    border-top: 1px solid #b58900;
+}
+
+div.line.selectedUser[data-highlight="false"] + 
+.event {
+    border-top: 1px solid #b58900;
+}
+
+
 div.line.selectedUser[data-highlight="false"]:hover {
     border-color: #aa362b;
 }
 
-div.line.selectedUser[data-highlight="false"] + div.line.selectedUser[data-highlight="false"] {
+div.line.selectedUser[data-highlight="false"] + 
+div.line.selectedUser[data-highlight="false"] {
     border-top: none;
 }
 
@@ -515,9 +521,9 @@ body div#loading_screen {
     /* Uncomment this and lines 595-598 for */
     /* a topic bar that only shows the whole */
     /* topic when hovering. */
-    /*overflow: hidden;
+    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;*/
+    text-overflow: ellipsis;
 }
 
 /* Hovering over the topic makes it completely */
@@ -528,9 +534,8 @@ body div#loading_screen {
     /* Uncomment these and the lines in #topicBar */
     /* for a topic bar that only shows the whole */
     /* topic when hovering. */
-
-    /*overflow: visible;
-    white-space: normal;*/
+    overflow: visible;
+    white-space: normal;
 }
 
 
