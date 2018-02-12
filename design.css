@@ -1,4 +1,5 @@
 @charset "utf-8";
+@import "inlineMedia.css";
 
 /* Basic Body Structure */
 body {
@@ -104,7 +105,7 @@ body[type*=server] .message {
 }
 
 /* Background of field containing own nickname */
-.text .sender[mtype="myself"] {
+.text .sender[data-member-type="myself"] {
     /*min-width: 105px;
     max-width: 220px;*/
     background: #073642;
@@ -141,9 +142,9 @@ body[type*=server] .sender { display: none; }
     background: #002b36;
 }
 
-/* /me */
-.line[ltype*=action] .message,
-.line[ltype*=action] .sender {
+/* /me action messaging */
+div.line[data-line-type="action"] .message,
+div.line[data-line-type="action"] .sender {
     /*background: #002b36;*/
     font-style: italic;
 }
@@ -165,25 +166,23 @@ body[type*=server] .sender { display: none; }
 
 /* Placed before the user's name when performing */
 /* a /me action. */
-.line[ltype*=action] .sender:before {
+div.line[data-line-type="action"] .sender:before {
     content: '• ';
 }
 
 /* Any and all channel events */
 /*body[type*=channel]*/ .event .message {
-    font-style: italic;
-    color: #444444 !important;
+    color: #586e75 !important;
     background: #000000;
     font-size: 0.8em !important;
     padding: 3px 8px 1px;
     line-height: 1.0rem;
 
     border-bottom: 1px solid transparent;
-    /*border-bottom: #ff0000;*/
 }
 
 /*body[type*=channel]*/ .event .time {
-    color: #444444 !important;
+    color: #586e75 !important;
     background: #000000;
     font-size: 0.8em !important;
     padding: 3px 8px 1px;
@@ -211,27 +210,17 @@ body[type*=server] .sender { display: none; }
 }
 
 /* Different symbols for join/leave messages */
-/* for easier visual reference. */
-.line[ltype*=join] .message:before {
+/* for easier visual reference. Green arrow */
+/* for joins, red for parts. */
+.line[data-line-type="join"] .message:before {
     content: '→ ';
-}
-
-/* Green for joins */
-.line[ltype*=join] .message:hover:before {
     color: #339933 !important;
 }
 
-.line[ltype*=kick] .message:before,
-.line[ltype*=part] .message:before,
-.line[ltype*=quit] .message:before {
+.line[data-line-type="kick"] .message:before,
+.line[data-line-type="part"] .message:before,
+.line[data-line-type="quit"] .message:before {
     content: '← ';
-    /*font-weight: bold;*/
-}
-
-/* Red for leaving */
-.line[ltype*=kick] .message:hover:before,
-.line[ltype*=part] .message:hover:before,
-.line[ltype*=quit] .message:hover:before {
     color: #dc322f !important;
 }
 
@@ -330,42 +319,42 @@ body[type*=server] .event .message:before {
 
 /* This controls the text color of the entire highlighted */
 /* message, as well as the timestamp text color. */
-.text[highlight*=true],
-.text[highlight*=true] .time {
+.text[data-highlight*=true],
+.text[data-highlight*=true] .time {
     font-weight: bold;
     color: #2aa198 !important;
     border:none; /* BADBADNOTGOOD */
     /*color: #ff0000;*/
 }
 
-/*.text[highlight*=true][type*=privmsg] .sender {
+/*.text[data-highlight*=true][type*=privmsg] .sender {
     padding: 5px 8px 3px !important;
 }*/
 
-.text[highlight*=true] {
+.text[data-highlight*=true] {
     border: 1px solid #284e84;
     border-left: none;
     border-right: none;
     outline: none;
 }
 
-.text[highlight*=true]:hover {
+.text[data-highlight*=true]:hover {
     border-color: #3069ab;
 }
 
-.text[highlight*=true] + .text[highlight*=true] {
+.text[data-highlight*=true] + .text[data-highlight*=true] {
     border-top: none;
 }
 
-.text[highlight*=true] .message,
-.text[highlight*=true] .sender,
-.text[highlight*=true] .time {
+.text[data-highlight*=true] .message,
+.text[data-highlight*=true] .sender,
+.text[data-highlight*=true] .time {
     background-color: #1b3458;
 }
 
-.text[highlight*=true]:hover .message,
-.text[highlight*=true]:hover .sender,
-.text[highlight*=true]:hover .time {
+.text[data-highlight*=true]:hover .message,
+.text[data-highlight*=true]:hover .sender,
+.text[data-highlight*=true]:hover .time {
     background-color: #204571;
 }
 
@@ -387,7 +376,7 @@ body[type*=server] .event .message:before {
 }
 
 .message_buffer_session_indicator > hr {
-    background: #93a1a1; /* Lines on either side */
+    background: #b58900; /* Lines on either side */
     border: 0;
     height: 1px;
     margin-top: 0.6em;
@@ -398,7 +387,7 @@ body[type*=server] .event .message:before {
 .message_buffer_session_indicator > span {
     font-style: oblique;
     margin: 0 1em;
-    color: #93a1a1;
+    color: #b58900; /* Text color of "current session" */
 }
 
 .message_buffer_session_indicator + #mark {
@@ -412,58 +401,76 @@ body[type*=server] .event .message:before {
     cursor: pointer;
 }
 
-div.line[ltype="privmsg"]:not(.selectedUser),
-div.line[ltype="action"]:not(.selectedUser) {
+div.line[data-line-type="privmsg"]:not(.selectedUser),
+div.line[data-line-type="action"]:not(.selectedUser) {
     transition-property: border-top, border-bottom, background-color;
     transition-duration: 0.25s, 0.25s, 0.25s;
 }
 
-div.line[ltype="privmsg"] .time:not(.selectedUser),
-div.line[ltype="action"] .time:not(.selectedUser) {
+div.line[data-line-type="privmsg"] .time:not(.selectedUser),
+div.line[data-line-type="action"] .time:not(.selectedUser) {
     transition: color 0.25s;
 }
 
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .time {
     transition: color 0.25s ease-in;
     color: #93a1a1; /* Emphasized content */
 }
 
 /* Remove existing borders when selected */
-div.line.selectedUser[highlight="false"] .message,
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .message,
+div.line.selectedUser[data-highlight="false"] .time {
     border: none;
 }
 
-div.line.selectedUser[highlight="false"] {
+div.line.selectedUser[data-highlight="false"] .sender:before {
+    content: '> ';
+}
+
+div.line.selectedUser[data-highlight="false"] {
     transition-property: color, border-top, border-bottom, background-color;
     transition-duration: 0.25s, 0.25s, 0.25s, 0.25s;
 
     color: #93a1a1; /* Emphasized content */
-    border: 1px solid #0f728a; /* dark red top/bottom border */
+    border-top: 1px solid #0f728a;
     border-left: none;
     border-right: none;
     outline: none;
 }
 
-div.line.selectedUser[highlight="false"]:hover {
-    border-color: #aa362b;
+/* Special rules for borders so they aren't placed */
+/* after consecutive messages. */
+div.line.selectedUser[data-highlight="false"] + 
+div.line[data-line-type="privmsg"]:not(.selectedUser) {
+    border-top: 1px solid #0f728a;
 }
 
-div.line.selectedUser[highlight="false"] + div.line.selectedUser[highlight="false"] {
+div.line.selectedUser[data-highlight="false"] + 
+.event {
+    border-top: 1px solid #0f728a;
+}
+
+
+div.line.selectedUser[data-highlight="false"]:hover {
+    /*border-color: #aa362b;*/
+}
+
+div.line.selectedUser[data-highlight="false"] + 
+div.line.selectedUser[data-highlight="false"] {
     border-top: none;
 }
 
 /* Color of selected messages */
-div.line.selectedUser[highlight="false"] .message,
-div.line.selectedUser[highlight="false"] .sender,
-div.line.selectedUser[highlight="false"] .time {
+div.line.selectedUser[data-highlight="false"] .message,
+div.line.selectedUser[data-highlight="false"] .sender,
+div.line.selectedUser[data-highlight="false"] .time {
     background-color: #073642;
 }
 
-div.line.selectedUser[highlight="false"]:hover .message,
-div.line.selectedUser[highlight="false"]:hover .sender,
-div.line.selectedUser[highlight="false"]:hover .time {
-    background-color: #68271d;
+div.line.selectedUser[data-highlight="false"]:hover .message,
+div.line.selectedUser[data-highlight="false"]:hover .sender,
+div.line.selectedUser[data-highlight="false"]:hover .time {
+    /*background-color: #68271d;*/
 }
 
 
@@ -494,7 +501,7 @@ body div#loading_screen {
 }
 
 /* Topic Bar */
-#topic_bar {
+#topicBar {
     background: rgba(51, 51, 51, 0.7); /* #333 */
     border-bottom: 1px solid #404040;
     /*box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.8);*/
@@ -507,35 +514,34 @@ body div#loading_screen {
     padding: 4px 12px 2px;
     position: fixed;
     right: 0;
-    text-align: center;
+    /*text-align: center;*/
     top: 0;
     z-index: 2;
 
     /* Uncomment this and lines 595-598 for */
     /* a topic bar that only shows the whole */
     /* topic when hovering. */
-    /*overflow: hidden;
+    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;*/
+    text-overflow: ellipsis;
 }
 
 /* Hovering over the topic makes it completely */
 /* opaque. */
-#topic_bar:hover {
+#topicBar:hover {
     background: rgba(51, 51, 51, 1.0);
 
-    /* Uncomment these and the lines in #topic_bar */
+    /* Uncomment these and the lines in #topicBar */
     /* for a topic bar that only shows the whole */
     /* topic when hovering. */
-
-    /*overflow: visible;
-    white-space: normal;*/
+    overflow: visible;
+    white-space: normal;
 }
 
 
 /* Links in topic bar */
-#topic_bar a,
-#topic_bar span.channel {
+#topicBar a,
+#topicBar span.channel {
     color: #268bd2;
     border-color: #268bd2;
     /*border-color: #f5f5f5;*/
@@ -566,7 +572,7 @@ img {
 
 /* Creates an identifying box around nicknames */
 /* referred to in messages. */
-body .inline_nickname {
+body .inlineSender {
     color: #fff;
     display: inline-block;
     line-height: 1;
@@ -577,7 +583,7 @@ body .inline_nickname {
     /*margin: 2px 0;*/
 }
 
-body .inline_nickname:hover {
+body .inlineSender:hover {
     text-decoration: underline;
     cursor: hand;
 }
@@ -588,192 +594,37 @@ body .inline_nickname:hover {
 
 body .text .sender[type*=myself] { color: #6c71c4; }
 
-body .sender[type*=normal][colornumber='0'],
-body .inline_nickname[colornumber='0'] {
-    color: #7cfc00;
-}
-
-body .sender[type*=normal][colornumber='1'],
-body .inline_nickname[colornumber='1']  { 
-    color: #c2ff40;
-}
-
-body .sender[type*=normal][colornumber='2'],
-body .inline_nickname[colornumber='2']  { 
-    color: #87ceeb;
-}
-
-body .sender[type*=normal][colornumber='3'],
-body .inline_nickname[colornumber='3']  { 
-    color: #e1c4ff;
-}
-
-body .sender[type*=normal][colornumber='4'],
-body .inline_nickname[colornumber='4']  { 
-    color: #6495ed;
-}
-
-body .sender[type*=normal][colornumber='5'],
-body .inline_nickname[colornumber='5']  { 
-    color: #ff69b4;
-}
-
-body .sender[type*=normal][colornumber='6'],
-body .inline_nickname[colornumber='6']  { 
-    color: #ffb6c1;
-}
-
-body .sender[type*=normal][colornumber='7'],
-body .inline_nickname[colornumber='7']  { 
-    color: #48d1cc;
-}
-
-body .sender[type*=normal][colornumber='8'],
-body .inline_nickname[colornumber='8']  { 
-    color: #ee82ee;
-}
-
-body .sender[type*=normal][colornumber='9'],
-body .inline_nickname[colornumber='9']  { 
-    color: #f66e72;
-}
-
-body .sender[type*=normal][colornumber='10'],
-body .inline_nickname[colornumber='10'] { 
-    color: #69ff89;
-}
-
-body .sender[type*=normal][colornumber='11'],
-body .inline_nickname[colornumber='11'] { 
-    color: #ffe170;
-}
-
-body .sender[type*=normal][colornumber='12'],
-body .inline_nickname[colornumber='12'] { 
-    color: #95d38f;
-}
-
-body .sender[type*=normal][colornumber='13'],
-body .inline_nickname[colornumber='13'] { 
-    color: #7eb6be;
-}
-
-body .sender[type*=normal][colornumber='14'],
-body .inline_nickname[colornumber='14'] { 
-    color: #f3d8e2;
-}
-
-body .sender[type*=normal][colornumber='15'],
-body .inline_nickname[colornumber='15'] { 
-    color: #f66e72;
-}
-
-body .sender[type*=normal][colornumber='16'],
-body .inline_nickname[colornumber='16'] { 
-    color: #faa4a6;
-}
-
-body .sender[type*=normal][colornumber='17'],
-body .inline_nickname[colornumber='17'] { 
-    color: #ffd4a8;
-}
-
-body .sender[type*=normal][colornumber='18'],
-body .inline_nickname[colornumber='18'] { 
-    color: #33ffbb;
-} /* Hi Neil ffeba5 */
-
-body .sender[type*=normal][colornumber='19'],
-body .inline_nickname[colornumber='19'] { 
-    color: #bae2b6;
-}
-
-body .sender[type*=normal][colornumber='20'],
-body .inline_nickname[colornumber='20'] { 
-    color: #aad0d4;
-}
-
-body .sender[type*=normal][colornumber='21'],
-body .inline_nickname[colornumber='21'] { 
-    color: #a8d0ef;
-}
-
-body .sender[type*=normal][colornumber='22'],
-body .inline_nickname[colornumber='22'] { 
-    color: #98a3ff;
-}
-
-body .sender[type*=normal][colornumber='23'],
-body .inline_nickname[colornumber='23'] { 
-    color: #c09bc3;
-}
-
-body .sender[type*=normal][colornumber='24'],
-body .inline_nickname[colornumber='24'] { 
-    color: #c38074;
-}
-
-body .sender[type*=normal][colornumber='25'],
-body .inline_nickname[colornumber='25'] { 
-    color: #a6e1a4;
-}
-
-body .sender[type*=normal][colornumber='26'],
-body .inline_nickname[colornumber='26'] { 
-    color: #7f99e1;
-}
-
-body .sender[type*=normal][colornumber='27'],
-body .inline_nickname[colornumber='27'] { 
-    color: #5ba2e1;
-}
-
-body .sender[type*=normal][colornumber='28'],
-body .inline_nickname[colornumber='28'] { 
-    color: #e1de7d;
-}
-
-body .sender[type*=normal][colornumber='29'],
-body .inline_nickname[colornumber='29'] { 
-    color: #e199a8;
-}
-
-body .sender[type*=normal][colornumber='30'],
-body .inline_nickname[colornumber='30'] { 
-    color: #b5a0e1;
-}
-
 /* mIRC Color Codes */
-.effect[color-number='0']  { color: #ffffff; }
-.effect[color-number='1']  { color: #000000; }
-.effect[color-number='2']  { color: #000088; }
-.effect[color-number='3']  { color: #008800; }
-.effect[color-number='4']  { color: #ff0000; }
-.effect[color-number='5']  { color: #880000; }
-.effect[color-number='6']  { color: #880088; }
-.effect[color-number='7']  { color: #ff8800; }
-.effect[color-number='8']  { color: #ffff00; }
-.effect[color-number='9']  { color: #00ff00; }
-.effect[color-number='10'] { color: #008888; }
-.effect[color-number='11'] { color: #00ffff; }
-.effect[color-number='12'] { color: #0000ff; }
-.effect[color-number='13'] { color: #ff00ff; }
-.effect[color-number='14'] { color: #888888; }
-.effect[color-number='15'] { color: #cccccc; }
+.effect[data-foreground-color='0']  { color: #ffffff; }
+.effect[data-foreground-color='1']  { color: #000000; }
+.effect[data-foreground-color='2']  { color: #000088; }
+.effect[data-foreground-color='3']  { color: #008800; }
+.effect[data-foreground-color='4']  { color: #ff0000; }
+.effect[data-foreground-color='5']  { color: #880000; }
+.effect[data-foreground-color='6']  { color: #880088; }
+.effect[data-foreground-color='7']  { color: #ff8800; }
+.effect[data-foreground-color='8']  { color: #ffff00; }
+.effect[data-foreground-color='9']  { color: #00ff00; }
+.effect[data-foreground-color='10'] { color: #008888; }
+.effect[data-foreground-color='11'] { color: #00ffff; }
+.effect[data-foreground-color='12'] { color: #0000ff; }
+.effect[data-foreground-color='13'] { color: #ff00ff; }
+.effect[data-foreground-color='14'] { color: #888888; }
+.effect[data-foreground-color='15'] { color: #cccccc; }
 
-.effect[bgcolor-number='0']  { background-color: #ffffff; }
-.effect[bgcolor-number='1']  { background-color: #000000; }
-.effect[bgcolor-number='2']  { background-color: #000088; }
-.effect[bgcolor-number='3']  { background-color: #008800; }
-.effect[bgcolor-number='4']  { background-color: #ff0000; }
-.effect[bgcolor-number='5']  { background-color: #880000; }
-.effect[bgcolor-number='6']  { background-color: #880088; }
-.effect[bgcolor-number='7']  { background-color: #ff8800; }
-.effect[bgcolor-number='8']  { background-color: #ffff00; }
-.effect[bgcolor-number='9']  { background-color: #00ff00; }
-.effect[bgcolor-number='10'] { background-color: #008888; }
-.effect[bgcolor-number='11'] { background-color: #00ffff; }
-.effect[bgcolor-number='12'] { background-color: #0000ff; }
-.effect[bgcolor-number='13'] { background-color: #ff00ff; }
-.effect[bgcolor-number='14'] { background-color: #888888; }
-.effect[bgcolor-number='15'] { background-color: #cccccc; }
+.effect[data-background-color='0']  { background-color: #ffffff; }
+.effect[data-background-color='1']  { background-color: #000000; }
+.effect[data-background-color='2']  { background-color: #000088; }
+.effect[data-background-color='3']  { background-color: #008800; }
+.effect[data-background-color='4']  { background-color: #ff0000; }
+.effect[data-background-color='5']  { background-color: #880000; }
+.effect[data-background-color='6']  { background-color: #880088; }
+.effect[data-background-color='7']  { background-color: #ff8800; }
+.effect[data-background-color='8']  { background-color: #ffff00; }
+.effect[data-background-color='9']  { background-color: #00ff00; }
+.effect[data-background-color='10'] { background-color: #008888; }
+.effect[data-background-color='11'] { background-color: #00ffff; }
+.effect[data-background-color='12'] { background-color: #0000ff; }
+.effect[data-background-color='13'] { background-color: #ff00ff; }
+.effect[data-background-color='14'] { background-color: #888888; }
+.effect[data-background-color='15'] { background-color: #cccccc; }

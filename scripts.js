@@ -40,7 +40,7 @@ Succinct = {
 
     getLineType: function (line)
     {
-        return ((line) ? line.getAttribute('ltype') : null);
+        return ((line) ? line.dataset.lineType : null);
     },
 
     getMessage: function (line)
@@ -56,18 +56,20 @@ Succinct = {
     getSenderNickname: function (line)
     {
         var sender = Succinct.getSenderElement(line);
-        return ((sender) ? sender.getAttribute('nickname') : null);
+        return ((sender) ? sender.dataset.nickname : null);
     },
 
     setWhoisTags: function(line, fromBuffer)
     {
-        if (line.getAttribute('command') === '311' ||
-            line.getAttribute('command') === '378' ||
-            line.getAttribute('command') === '307' ||
-            line.getAttribute('command') === '319' ||
-            line.getAttribute('command') === '312' ||
-            line.getAttribute('command') === '671' ||
-            line.getAttribute('command') === '317')
+        if (line.getAttribute('data-command') === '311' ||
+            line.getAttribute('data-command') === '378' ||
+            line.getAttribute('data-command') === '307' ||
+            line.getAttribute('data-command') === '319' ||
+            line.getAttribute('data-command') === '312' ||
+            line.getAttribute('data-command') === '671' ||
+            line.getAttribute('data-command') === '317' ||
+            line.getAttribute('data-command') === '301' ||
+            line.getAttribute('data-command') === '330')
         {
             line.classList.add('whois');
         }
