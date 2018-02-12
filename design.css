@@ -387,7 +387,7 @@ body[type*=server] .event .message:before {
 .message_buffer_session_indicator > span {
     font-style: oblique;
     margin: 0 1em;
-    color: #b58900;
+    color: #b58900; /* Text color of "current session" */
 }
 
 .message_buffer_session_indicator + #mark {
@@ -432,7 +432,7 @@ div.line.selectedUser[data-highlight="false"] {
     transition-duration: 0.25s, 0.25s, 0.25s, 0.25s;
 
     color: #93a1a1; /* Emphasized content */
-    border: 1px solid #0f728a; /* dark red top/bottom border */
+    border-top: 1px solid #0f728a;
     border-left: none;
     border-right: none;
     outline: none;
@@ -442,17 +442,17 @@ div.line.selectedUser[data-highlight="false"] {
 /* after consecutive messages. */
 div.line.selectedUser[data-highlight="false"] + 
 div.line[data-line-type="privmsg"]:not(.selectedUser) {
-    border-top: 1px solid #b58900;
+    border-top: 1px solid #0f728a;
 }
 
 div.line.selectedUser[data-highlight="false"] + 
 .event {
-    border-top: 1px solid #b58900;
+    border-top: 1px solid #0f728a;
 }
 
 
 div.line.selectedUser[data-highlight="false"]:hover {
-    border-color: #aa362b;
+    /*border-color: #aa362b;*/
 }
 
 div.line.selectedUser[data-highlight="false"] + 
@@ -470,7 +470,7 @@ div.line.selectedUser[data-highlight="false"] .time {
 div.line.selectedUser[data-highlight="false"]:hover .message,
 div.line.selectedUser[data-highlight="false"]:hover .sender,
 div.line.selectedUser[data-highlight="false"]:hover .time {
-    background-color: #68271d;
+    /*background-color: #68271d;*/
 }
 
 
