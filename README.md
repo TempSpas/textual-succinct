@@ -1,7 +1,7 @@
 Succinct Style for Textual
 ==========================
 
-Succinct is a [Solarized dark](http://ethanschoonover.com/solarized) theme for the Textual IRC client based on the [Colloquy theme of the same name](https://github.com/TempSpas/succinct-for-colloquy). The code was built off of the [Sulaco](https://github.com/rgrove/textual-sulaco) dark theme. The theme is still in beta, so expect some kinks here and there.
+Succinct is a [Solarized dark](http://ethanschoonover.com/solarized) theme for the Textual IRC client based on the [Colloquy theme of the same name](https://github.com/TempSpas/succinct-for-colloquy). The code was built off of the [Sulaco](https://github.com/rgrove/textual-sulaco) dark theme. A light variant of the theme is available [here](https://github.com/TempSpas/SuccinctLight).
 
 ![Screenshot](/Screenshots/screenshot1.png?raw=true)
 
@@ -38,8 +38,6 @@ Succinct is a [Solarized dark](http://ethanschoonover.com/solarized) theme for t
 * Tweak highlight message color.
 
 * Finalize selected user colors.
-
-* Make changes to inline images. Should have a more uniform alignment pattern.
 
 ## License
 
